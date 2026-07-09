@@ -24,6 +24,10 @@ export default function Sidebar() {
           Meals
         </Link>
 
+        <Link to="/coach/progress" className="block hover:text-orange-500">
+         Progress
+        </Link>
+        
         <Link to="/coach/settings" className="block hover:text-orange-500">
           Settings
         </Link>
