@@ -1,43 +1,66 @@
-import ExerciseItem from "./ExerciseItem";
+import WorkoutDay from "./WorkoutDay";
+
+const DAYS = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
 
 export default function WorkoutForm({
   workoutData,
   setWorkoutData,
 }) {
-  function addExercise() {
+  function updateWorkout(field, value) {
     setWorkoutData({
       ...workoutData,
-      exercises: [
-        ...(workoutData.exercises || []),
-        {
-          name: "",
-          sets: "",
-          reps: "",
-          rest: "",
-          tempo: "",
-          notes: "",
-        },
-      ],
+      [field]: value,
     });
   }
 
-  function updateExercise(index, updatedExercise) {
-    const exercises = [...(workoutData.exercises || [])];
-    exercises[index] = updatedExercise;
+  function addExercise(day) {
+    const week = { ...workoutData.week };
+
+    week[day] = [
+      ...(week[day] || []),
+      {
+        name: "",
+        sets: "",
+        reps: "",
+        rest: "",
+        tempo: "",
+        notes: "",
+      },
+    ];
 
     setWorkoutData({
       ...workoutData,
-      exercises,
+      week,
     });
   }
 
-  function deleteExercise(index) {
-    const exercises = [...(workoutData.exercises || [])];
-    exercises.splice(index, 1);
+  function updateExercise(day, index, updatedExercise) {
+    const week = { ...workoutData.week };
+
+    week[day][index] = updatedExercise;
 
     setWorkoutData({
       ...workoutData,
-      exercises,
+      week,
+    });
+  }
+
+  function deleteExercise(day, index) {
+    const week = { ...workoutData.week };
+
+    week[day] = week[day].filter((_, i) => i !== index);
+
+    setWorkoutData({
+      ...workoutData,
+      week,
     });
   }
 
@@ -48,23 +71,13 @@ export default function WorkoutForm({
         type="text"
         placeholder="Workout Name"
         value={workoutData.name}
-        onChange={(e) =>
-          setWorkoutData({
-            ...workoutData,
-            name: e.target.value,
-          })
-        }
+        onChange={(e) => updateWorkout("name", e.target.value)}
         className="w-full bg-zinc-800 p-3 rounded-lg border border-zinc-700 focus:border-orange-500 outline-none"
       />
 
       <select
         value={workoutData.goal}
-        onChange={(e) =>
-          setWorkoutData({
-            ...workoutData,
-            goal: e.target.value,
-          })
-        }
+        onChange={(e) => updateWorkout("goal", e.target.value)}
         className="w-full bg-zinc-800 p-3 rounded-lg border border-zinc-700 focus:border-orange-500 outline-none"
       >
         <option value="">Select Goal</option>
@@ -75,51 +88,21 @@ export default function WorkoutForm({
         <option value="Contest Prep">Contest Prep</option>
       </select>
 
-      <input
-        type="text"
-        placeholder="Training Days"
-        value={workoutData.days}
-        onChange={(e) =>
-          setWorkoutData({
-            ...workoutData,
-            days: e.target.value,
-          })
-        }
-        className="w-full bg-zinc-800 p-3 rounded-lg border border-zinc-700 focus:border-orange-500 outline-none"
-      />
-
-      <div className="space-y-4">
-
-        <div className="flex justify-between items-center">
-          <h3 className="text-xl font-bold text-orange-500">
-            Exercises
-          </h3>
-
-          <button
-            type="button"
-            onClick={addExercise}
-            className="bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-lg"
-          >
-            + Add Exercise
-          </button>
-        </div>
-
-        {(workoutData.exercises || []).length === 0 ? (
-          <div className="rounded-xl border border-dashed border-zinc-700 p-6 text-center text-gray-400">
-            No exercises added yet.
-          </div>
-        ) : (
-          workoutData.exercises.map((exercise, index) => (
-            <ExerciseItem
-              key={index}
-              exercise={exercise}
-              index={index}
-              onChange={updateExercise}
-              onDelete={deleteExercise}
-            />
-          ))
-        )}
-
+      <div className="space-y-8">
+        {DAYS.map((day) => (
+          <WorkoutDay
+            key={day}
+            day={day}
+            exercises={workoutData.week?.[day] || []}
+            onAddExercise={() => addExercise(day)}
+            onUpdateExercise={(index, exercise) =>
+              updateExercise(day, index, exercise)
+            }
+            onDeleteExercise={(index) =>
+              deleteExercise(day, index)
+            }
+          />
+        ))}
       </div>
 
     </div>

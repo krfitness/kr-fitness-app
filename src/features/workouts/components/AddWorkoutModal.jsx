@@ -13,20 +13,34 @@ export default function AddWorkoutModal({
   editWorkout,
 }) {
   const emptyWorkout = {
-    name: "",
-    goal: "",
-    days: "",
-    exercises: [],
-  };
+  name: "",
+  goal: "",
+  week: {
+    Monday: [],
+    Tuesday: [],
+    Wednesday: [],
+    Thursday: [],
+    Friday: [],
+    Saturday: [],
+    Sunday: [],
+  },
+};
 
   const [workoutData, setWorkoutData] = useState(() => {
     if (editWorkout) {
-      return {
-        name: editWorkout.name || "",
-        goal: editWorkout.goal || "",
-        days: editWorkout.days || "",
-        exercises: editWorkout.exercises || [],
-      };
+     return {
+  name: editWorkout.name || "",
+  goal: editWorkout.goal || "",
+  week: editWorkout.week || {
+    Monday: [],
+    Tuesday: [],
+    Wednesday: [],
+    Thursday: [],
+    Friday: [],
+    Saturday: [],
+    Sunday: [],
+  },
+};
     }
 
     return { ...emptyWorkout };
@@ -59,9 +73,9 @@ export default function AddWorkoutModal({
   if (!show) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-6 z-50">
 
-      <div className="bg-zinc-900 rounded-2xl p-8 w-full max-w-3xl border border-zinc-800">
+      <div className="bg-zinc-900 rounded-2xl p-8 w-full max-w-4xl max-h-[90vh] overflow-y-auto border border-zinc-800">
 
         <h2 className="text-3xl font-bold text-orange-500 mb-6">
           {editWorkout ? "Edit Workout" : "Create Workout"}
