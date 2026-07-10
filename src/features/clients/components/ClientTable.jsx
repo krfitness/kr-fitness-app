@@ -1,7 +1,7 @@
 export default function ClientTable({
   clients,
-  onEdit,
-  onDelete,
+  onEdit = () => {},
+  onDelete = () => {},
 }) {
   return (
     <div className="bg-zinc-900 rounded-2xl border border-zinc-800 overflow-hidden">

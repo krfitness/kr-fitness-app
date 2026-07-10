@@ -1,5 +1,5 @@
 import Clients from "../features/clients/pages/Clients";
-import Workouts from "../pages/coach/Workouts";
+import Workouts from "../features/workouts/pages/Workouts";
 import Meals from "../pages/coach/Meals";
 import Progress from "../pages/coach/Progress";
 import Settings from "../pages/coach/Settings";
