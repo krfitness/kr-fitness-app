@@ -20,6 +20,10 @@ export default function Sidebar() {
           Workouts
         </Link>
 
+        <Link to="/coach/exercises" className="block hover:text-orange-500">
+          Exercise Library
+        </Link>
+
         <Link to="/coach/meals" className="block hover:text-orange-500">
           Meals
         </Link>

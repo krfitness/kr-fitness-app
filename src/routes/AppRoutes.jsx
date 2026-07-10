@@ -4,6 +4,7 @@ import Meals from "../pages/coach/Meals";
 import Progress from "../pages/coach/Progress";
 import Settings from "../pages/coach/Settings";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Exercises from "../features/exercises/pages/Exercises";
 
 import Home from "../pages/Home";
 import Login from "../pages/Login";
@@ -21,6 +22,7 @@ export default function AppRoutes() {
   <Route path="/coach" element={<Dashboard />} />
   <Route path="/coach/clients" element={<Clients />} />
   <Route path="/coach/workouts" element={<Workouts />} />
+  <Route path="/coach/exercises" element={<Exercises />} />
   <Route path="/coach/meals" element={<Meals />} />
   <Route path="/coach/progress" element={<Progress />} />
   <Route path="/coach/settings" element={<Settings />} />
