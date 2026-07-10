@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { toast } from "react-hot-toast";
 import ClientForm from "./ClientForm";
 import {
   addClient,
   updateClient,
-} from "../../services/clientService";
+} from "../services/clientService";
 
 export default function AddClientModal({
   show,
@@ -46,10 +47,12 @@ export default function AddClientModal({
     try {
       if (editClient) {
         await updateClient(editClient.id, formData);
-        alert("Client updated successfully!");
-      } else {
+        toast.success("Client updated successfully!");
+      } else 
+        
+        {
         await addClient(formData);
-        alert("Client added successfully!");
+        toast.success("Client added successfully!");
       }
 
       if (onClientAdded) {
@@ -62,7 +65,7 @@ export default function AddClientModal({
 
     } catch (error) {
       console.error(error);
-      alert("Operation failed.");
+      toast.error("Operation failed.");
     }
   }
 

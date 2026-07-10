@@ -1,37 +1,29 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
-import SearchBar from "../../components/clients/SearchBar";
-import ClientTable from "../../components/clients/ClientTable";
-import AddClientModal from "../../components/clients/AddClientModal";
+import SearchBar from "../components/SearchBar";
+import ClientTable from "../components/ClientTable";
+import AddClientModal from "../components/AddClientModal";
 
-import { getClients } from "../../services/clientService";
+import { getClients } from "../services/clientService";
 
 export default function Clients() {
   const [showModal, setShowModal] = useState(false);
   const [clients, setClients] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedClient, setSelectedClient] = useState(null);
 
-  async function loadClients() {
+  const loadClients = useCallback(async () => {
     try {
       const data = await getClients();
       setClients(data);
     } catch (error) {
       console.error(error);
     }
-  }
+  }, []);
 
   useEffect(() => {
-  async function fetchClients() {
-    try {
-      const data = await getClients();
-      setClients(data);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  fetchClients();
-}, []);
+    loadClients();
+  }, [loadClients]);
 
   const filteredClients = clients.filter((client) => {
     const search = searchTerm.toLowerCase();
@@ -42,6 +34,21 @@ export default function Clients() {
       client.phone?.toLowerCase().includes(search)
     );
   });
+
+  function handleAddClient() {
+    setSelectedClient(null);
+    setShowModal(true);
+  }
+
+  function handleEditClient(client) {
+    setSelectedClient(client);
+    setShowModal(true);
+  }
+
+  function handleCloseModal() {
+    setShowModal(false);
+    setSelectedClient(null);
+  }
 
   return (
     <div className="text-white">
@@ -59,7 +66,7 @@ export default function Clients() {
         </div>
 
         <button
-          onClick={() => setShowModal(true)}
+          onClick={handleAddClient}
           className="bg-orange-500 hover:bg-orange-600 px-6 py-3 rounded-xl font-semibold transition"
         >
           + Add Client
@@ -75,16 +82,15 @@ export default function Clients() {
       <div className="mt-8">
         <ClientTable
           clients={filteredClients}
-          onEdit={(client) => {
-            console.log("Edit:", client);
-          }}
+          onEdit={handleEditClient}
         />
       </div>
 
       <AddClientModal
         show={showModal}
-        onClose={() => setShowModal(false)}
+        onClose={handleCloseModal}
         onClientAdded={loadClients}
+        editClient={selectedClient}
       />
 
     </div>

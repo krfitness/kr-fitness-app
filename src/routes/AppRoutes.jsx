@@ -1,4 +1,4 @@
-import Clients from "../pages/coach/Clients";
+import Clients from "../features/clients/pages/Clients";
 import Workouts from "../pages/coach/Workouts";
 import Meals from "../pages/coach/Meals";
 import Progress from "../pages/coach/Progress";
