@@ -1,7 +1,46 @@
+import ExerciseItem from "./ExerciseItem";
+
 export default function WorkoutForm({
   workoutData,
   setWorkoutData,
 }) {
+  function addExercise() {
+    setWorkoutData({
+      ...workoutData,
+      exercises: [
+        ...(workoutData.exercises || []),
+        {
+          name: "",
+          sets: "",
+          reps: "",
+          rest: "",
+          tempo: "",
+          notes: "",
+        },
+      ],
+    });
+  }
+
+  function updateExercise(index, updatedExercise) {
+    const exercises = [...(workoutData.exercises || [])];
+    exercises[index] = updatedExercise;
+
+    setWorkoutData({
+      ...workoutData,
+      exercises,
+    });
+  }
+
+  function deleteExercise(index) {
+    const exercises = [...(workoutData.exercises || [])];
+    exercises.splice(index, 1);
+
+    setWorkoutData({
+      ...workoutData,
+      exercises,
+    });
+  }
+
   return (
     <div className="space-y-6">
 
@@ -38,7 +77,7 @@ export default function WorkoutForm({
 
       <input
         type="text"
-        placeholder="Training Days (Example: Monday, Tuesday, Thursday)"
+        placeholder="Training Days"
         value={workoutData.days}
         onChange={(e) =>
           setWorkoutData({
@@ -49,8 +88,38 @@ export default function WorkoutForm({
         className="w-full bg-zinc-800 p-3 rounded-lg border border-zinc-700 focus:border-orange-500 outline-none"
       />
 
-      <div className="rounded-xl border border-dashed border-zinc-700 p-6 text-center text-gray-400">
-        Exercise Builder (Coming Soon)
+      <div className="space-y-4">
+
+        <div className="flex justify-between items-center">
+          <h3 className="text-xl font-bold text-orange-500">
+            Exercises
+          </h3>
+
+          <button
+            type="button"
+            onClick={addExercise}
+            className="bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-lg"
+          >
+            + Add Exercise
+          </button>
+        </div>
+
+        {(workoutData.exercises || []).length === 0 ? (
+          <div className="rounded-xl border border-dashed border-zinc-700 p-6 text-center text-gray-400">
+            No exercises added yet.
+          </div>
+        ) : (
+          workoutData.exercises.map((exercise, index) => (
+            <ExerciseItem
+              key={index}
+              exercise={exercise}
+              index={index}
+              onChange={updateExercise}
+              onDelete={deleteExercise}
+            />
+          ))
+        )}
+
       </div>
 
     </div>
