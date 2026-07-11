@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-
+import AssignWorkoutModal from "../components/AssignWorkoutModal";
 import SearchBar from "../components/SearchBar";
 import ClientTable from "../components/ClientTable";
 import AddClientModal from "../components/AddClientModal";
@@ -11,6 +11,7 @@ export default function Clients() {
   const [clients, setClients] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedClient, setSelectedClient] = useState(null);
+  const [showAssignModal, setShowAssignModal] = useState(false);
 
   const loadClients = useCallback(async () => {
     try {
@@ -40,15 +41,21 @@ export default function Clients() {
     setShowModal(true);
   }
 
+  function handleAssignWorkout(client) {
+  setSelectedClient(client);
+  setShowAssignModal(true);
+}
+
   function handleEditClient(client) {
     setSelectedClient(client);
     setShowModal(true);
   }
 
   function handleCloseModal() {
-    setShowModal(false);
-    setSelectedClient(null);
-  }
+  setShowModal(false);
+  setShowAssignModal(false);
+  setSelectedClient(null);
+}
 
   return (
     <div className="text-white">
@@ -81,9 +88,10 @@ export default function Clients() {
 
       <div className="mt-8">
         <ClientTable
-          clients={filteredClients}
-          onEdit={handleEditClient}
-        />
+  clients={filteredClients}
+  onEdit={handleEditClient}
+  onAssignWorkout={handleAssignWorkout}
+/>
       </div>
 
       <AddClientModal
@@ -93,6 +101,11 @@ export default function Clients() {
         editClient={selectedClient}
       />
 
+      <AssignWorkoutModal
+  show={showAssignModal}
+  onClose={handleCloseModal}
+  client={selectedClient}
+/>
     </div>
   );
 }

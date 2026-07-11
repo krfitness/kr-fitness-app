@@ -3,6 +3,7 @@ import {
   collection,
   addDoc,
   getDocs,
+  getDoc,
   updateDoc,
   deleteDoc,
   doc,
@@ -39,4 +40,19 @@ export async function deleteWorkout(id) {
   const workoutRef = doc(db, "workouts", id);
 
   await deleteDoc(workoutRef);
+}
+
+export async function getWorkoutById(id) {
+  const workoutRef = doc(db, "workouts", id);
+
+  const snapshot = await getDoc(workoutRef);
+
+  if (!snapshot.exists()) {
+    return null;
+  }
+
+  return {
+    id: snapshot.id,
+    ...snapshot.data(),
+  };
 }

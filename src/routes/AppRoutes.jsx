@@ -9,7 +9,7 @@ import Exercises from "../features/exercises/pages/Exercises";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Dashboard from "../pages/coach/Dashboard";
-import ClientDashboard from "../pages/ClientDashboard";
+import ClientDashboard from "../features/client/pages/Dashboard";
 import NotFound from "../pages/NotFound";
 
 export default function AppRoutes() {

@@ -1,6 +1,7 @@
 export default function ClientTable({
   clients,
   onEdit = () => {},
+  onAssignWorkout = () => {},
   onDelete = () => {},
 }) {
   return (
@@ -56,18 +57,25 @@ export default function ClientTable({
                 <td className="p-4">
 
                   <button
-                    onClick={() => onEdit(client)}
-                    className="text-orange-500 hover:text-orange-400 mr-5"
-                  >
-                    Edit
-                  </button>
+  onClick={() => onEdit(client)}
+  className="text-orange-500 hover:text-orange-400 mr-5"
+>
+  Edit
+</button>
 
-                  <button
-                    onClick={() => onDelete(client)}
-                    className="text-red-500 hover:text-red-400"
-                  >
-                    Delete
-                  </button>
+<button
+  onClick={() => onAssignWorkout(client)}
+  className="text-blue-500 hover:text-blue-400 mr-5"
+>
+  Assign Workout
+</button>
+
+<button
+  onClick={() => onDelete(client)}
+  className="text-red-500 hover:text-red-400"
+>
+  Delete
+</button>
 
                 </td>
 
