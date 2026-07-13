@@ -4,24 +4,41 @@ import WorkoutCard from "./WorkoutCard";
 import { getAssignedWorkout } from "../services/clientService";
 import { getWorkoutById } from "../../workouts/services/workoutService";
 
+import useAuth from "../../auth/hooks/useAuth";
+import { getClientByEmail } from "../services/clientProfileService";
+
 export default function TodayWorkout() {
   const [workout, setWorkout] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [clientId, setClientId] = useState(null);
 
-  // Temporary client ID
-  // Later this will come from Firebase Authentication
-  const clientId = "wyZ9TIGKbXbCeyrKkbix";
+  const { currentUser, loading: authLoading } = useAuth();
 
   useEffect(() => {
     async function loadWorkout() {
-      try {
-        const assignment = await getAssignedWorkout(clientId);
+      if (authLoading) return;
 
-        console.log("Client ID:", clientId);
-        console.log("Assignment:", assignment);
+      try {
+        if (!currentUser) {
+          setLoading(false);
+          return;
+        }
+
+        const client = await getClientByEmail(currentUser.email);
+
+        if (!client) {
+          setLoading(false);
+          return;
+        }
+
+        const id = client.id;
+        setClientId(id);
+
+        const assignment = await getAssignedWorkout(id);
 
         if (!assignment) {
           setWorkout(null);
+          setLoading(false);
           return;
         }
 
@@ -30,7 +47,6 @@ export default function TodayWorkout() {
         );
 
         setWorkout(workoutData);
-
       } catch (error) {
         console.error(error);
       } finally {
@@ -39,12 +55,12 @@ export default function TodayWorkout() {
     }
 
     loadWorkout();
-  }, []);
+  }, [currentUser, authLoading]);
 
-  if (loading) {
+  if (authLoading || loading) {
     return (
       <div className="text-gray-400">
-        Loading workout...
+        Loading...
       </div>
     );
   }
@@ -59,16 +75,14 @@ export default function TodayWorkout() {
 
   return (
     <div className="space-y-6">
-
       <h2 className="text-2xl font-bold text-orange-500">
         Today's Workout
       </h2>
 
       <WorkoutCard
-  workout={workout}
-  clientId={clientId}
-/>
-
+        workout={workout}
+        clientId={clientId}
+      />
     </div>
   );
 }

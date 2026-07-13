@@ -20,10 +20,10 @@ export default function ClientLayout({ children }) {
           </Link>
 
           <Link
-            to="/client/workout"
+            to="/client"
             className="block hover:text-orange-500"
           >
-            Today's Workout
+             Today's Workout
           </Link>
 
           <Link

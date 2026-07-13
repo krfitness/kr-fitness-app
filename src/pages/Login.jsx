@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { loginUser } from "../firebase/auth";
+import { getUserRole } from "../features/auth/services/userService";
 import Button from "../components/Button";
 
 export default function Login() {
@@ -7,13 +9,30 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  const navigate = useNavigate();
+
   async function handleLogin(e) {
     e.preventDefault();
     setError("");
 
     try {
-      await loginUser(email, password);
-      alert("Login Successful!");
+      const userCredential = await loginUser(email, password);
+
+      const uid = userCredential.user.uid;
+
+      const userData = await getUserRole(uid);
+
+      if (!userData) {
+        setError("User profile not found.");
+        return;
+      }
+
+      if (userData.role.toLowerCase() === "coach") {
+        navigate("/coach", { replace: true });
+      } else {
+        navigate("/client", { replace: true });
+      }
+
     } catch (err) {
       setError(err.message);
     }
