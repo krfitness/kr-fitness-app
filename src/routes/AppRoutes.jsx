@@ -8,7 +8,7 @@ import Dashboard from "../pages/coach/Dashboard";
 import Clients from "../features/clients/pages/Clients";
 import Workouts from "../features/workouts/pages/Workouts";
 import Exercises from "../features/exercises/pages/Exercises";
-import Meals from "../pages/coach/Meals";
+import Meals from "../features/meals/pages/Meals";
 import Progress from "../pages/coach/Progress";
 import Settings from "../pages/coach/Settings";
 
