@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { loginUser } from "../firebase/auth";
 import { getUserRole } from "../features/auth/services/userService";
 import Button from "../components/Button";
+import { canClientLogin } from "../features/auth/services/loginGuard";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -28,11 +29,19 @@ export default function Login() {
       }
 
       if (userData.role.toLowerCase() === "coach") {
-        navigate("/coach", { replace: true });
-      } else {
-        navigate("/client", { replace: true });
-      }
+  navigate("/coach", { replace: true });
+} else {
 
+  const allowed = await canClientLogin(uid);
+
+  if (!allowed) {
+    setError("Your account is awaiting coach approval.");
+    return;
+  }
+
+  navigate("/client", { replace: true });
+
+}
     } catch (err) {
       setError(err.message);
     }

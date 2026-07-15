@@ -3,7 +3,6 @@ import AssignWorkoutModal from "../components/AssignWorkoutModal";
 import SearchBar from "../components/SearchBar";
 import ClientTable from "../components/ClientTable";
 import AddClientModal from "../components/AddClientModal";
-
 import { getClients } from "../services/clientService";
 
 export default function Clients() {
@@ -42,9 +41,9 @@ export default function Clients() {
   }
 
   function handleAssignWorkout(client) {
-  setSelectedClient(client);
-  setShowAssignModal(true);
-}
+    setSelectedClient(client);
+    setShowAssignModal(true);
+  }
 
   function handleEditClient(client) {
     setSelectedClient(client);
@@ -52,10 +51,10 @@ export default function Clients() {
   }
 
   function handleCloseModal() {
-  setShowModal(false);
-  setShowAssignModal(false);
-  setSelectedClient(null);
-}
+    setShowModal(false);
+    setShowAssignModal(false);
+    setSelectedClient(null);
+  }
 
   return (
     <div className="text-white">
@@ -74,7 +73,7 @@ export default function Clients() {
 
         <button
           onClick={handleAddClient}
-          className="bg-orange-500 hover:bg-orange-600 px-6 py-3 rounded-xl font-semibold transition"
+          className="bg-orange-500 hover:bg-orange-600 px-6 py-3 rounded-xl font-semibold"
         >
           + Add Client
         </button>
@@ -88,10 +87,11 @@ export default function Clients() {
 
       <div className="mt-8">
         <ClientTable
-  clients={filteredClients}
-  onEdit={handleEditClient}
-  onAssignWorkout={handleAssignWorkout}
-/>
+          clients={filteredClients}
+          onEdit={handleEditClient}
+          onAssignWorkout={handleAssignWorkout}
+          onRefresh={loadClients}
+        />
       </div>
 
       <AddClientModal
@@ -102,10 +102,11 @@ export default function Clients() {
       />
 
       <AssignWorkoutModal
-  show={showAssignModal}
-  onClose={handleCloseModal}
-  client={selectedClient}
-/>
+        show={showAssignModal}
+        onClose={handleCloseModal}
+        client={selectedClient}
+      />
+
     </div>
   );
 }
