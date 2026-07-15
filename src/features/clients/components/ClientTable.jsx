@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function ClientTable({
   clients,
   onEdit = () => {},
@@ -54,28 +56,35 @@ export default function ClientTable({
                   </span>
                 </td>
 
-                <td className="p-4">
+                <td className="p-4 flex flex-wrap gap-3">
+
+                  <Link
+                    to={`/coach/client/${client.id}`}
+                    className="text-green-500 hover:text-green-400"
+                  >
+                    View
+                  </Link>
 
                   <button
-  onClick={() => onEdit(client)}
-  className="text-orange-500 hover:text-orange-400 mr-5"
->
-  Edit
-</button>
+                    onClick={() => onEdit(client)}
+                    className="text-orange-500 hover:text-orange-400"
+                  >
+                    Edit
+                  </button>
 
-<button
-  onClick={() => onAssignWorkout(client)}
-  className="text-blue-500 hover:text-blue-400 mr-5"
->
-  Assign Workout
-</button>
+                  <button
+                    onClick={() => onAssignWorkout(client)}
+                    className="text-blue-500 hover:text-blue-400"
+                  >
+                    Assign Workout
+                  </button>
 
-<button
-  onClick={() => onDelete(client)}
-  className="text-red-500 hover:text-red-400"
->
-  Delete
-</button>
+                  <button
+                    onClick={() => onDelete(client)}
+                    className="text-red-500 hover:text-red-400"
+                  >
+                    Delete
+                  </button>
 
                 </td>
 

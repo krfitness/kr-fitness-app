@@ -14,6 +14,8 @@ import {
 const mealsCollection = collection(db, "meals");
 
 export async function addMeal(mealData) {
+  console.log(JSON.stringify(mealData, null, 2));
+
   const docRef = await addDoc(mealsCollection, {
     ...mealData,
     createdAt: serverTimestamp(),

@@ -1,29 +1,19 @@
 import { db } from "../../../firebase/firebaseConfig";
 import {
   collection,
-  getDocs,
   query,
   where,
+  getDocs,
+  getDoc,
+  doc,
 } from "firebase/firestore";
-
-export async function getClients() {
-  const clientsRef = collection(db, "clients");
-
-  const snapshot = await getDocs(clientsRef);
-
-  return snapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
-}
 
 export async function getAssignedWorkout(clientId) {
   const assignmentsRef = collection(db, "clientWorkouts");
 
   const q = query(
     assignmentsRef,
-    where("clientId", "==", clientId),
-    where("status", "==", "Active")
+    where("clientId", "==", clientId)
   );
 
   const snapshot = await getDocs(q);
@@ -32,8 +22,22 @@ export async function getAssignedWorkout(clientId) {
     return null;
   }
 
+  const assignment = snapshot.docs[0].data();
+
+  if (!assignment.workoutId) {
+    return null;
+  }
+
+  const workoutRef = doc(db, "workouts", assignment.workoutId);
+
+  const workoutSnap = await getDoc(workoutRef);
+
+  if (!workoutSnap.exists()) {
+    return null;
+  }
+
   return {
-    id: snapshot.docs[0].id,
-    ...snapshot.docs[0].data(),
+    id: workoutSnap.id,
+    ...workoutSnap.data(),
   };
 }

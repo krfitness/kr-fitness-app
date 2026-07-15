@@ -59,7 +59,7 @@ export default function AssignMealModal({
 
           {clients.map((client) => (
             <option key={client.id} value={client.id}>
-              {client.name}
+              {client.fullName}
             </option>
           ))}
         </select>

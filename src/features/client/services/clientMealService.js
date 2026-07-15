@@ -4,10 +4,10 @@ import {
   getDoc,
 } from "firebase/firestore";
 
-export async function getUserRole(uid) {
-  const userRef = doc(db, "users", uid);
+export async function getAssignedMeal(clientId) {
+  const mealRef = doc(db, "clientMeals", clientId);
 
-  const snapshot = await getDoc(userRef);
+  const snapshot = await getDoc(mealRef);
 
   if (!snapshot.exists()) {
     return null;

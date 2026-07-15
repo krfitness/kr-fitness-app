@@ -6,6 +6,7 @@ import NotFound from "../pages/NotFound";
 
 import Dashboard from "../pages/coach/Dashboard";
 import Clients from "../features/clients/pages/Clients";
+import ClientProfile from "../features/clients/pages/ClientProfile";
 import Workouts from "../features/workouts/pages/Workouts";
 import Exercises from "../features/exercises/pages/Exercises";
 import Meals from "../features/meals/pages/Meals";
@@ -13,6 +14,7 @@ import Progress from "../pages/coach/Progress";
 import Settings from "../pages/coach/Settings";
 
 import ClientDashboard from "../features/client/pages/Dashboard";
+import ClientProgress from "../features/progress/pages/Progress";
 
 import useAuth from "../features/auth/hooks/useAuth";
 
@@ -52,6 +54,15 @@ export default function AppRoutes() {
           element={
             <ProtectedRoute>
               <Clients />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/coach/client/:id"
+          element={
+            <ProtectedRoute>
+              <ClientProfile />
             </ProtectedRoute>
           }
         />
@@ -106,6 +117,15 @@ export default function AppRoutes() {
           element={
             <ProtectedRoute>
               <ClientDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/client/progress"
+          element={
+            <ProtectedRoute>
+              <ClientProgress />
             </ProtectedRoute>
           }
         />
