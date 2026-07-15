@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Home from "../pages/Home";
 import Login from "../pages/Login";
@@ -14,6 +14,11 @@ import Progress from "../pages/coach/Progress";
 import Settings from "../pages/coach/Settings";
 
 import ClientDashboard from "../features/client/pages/Dashboard";
+import ClientWorkout from "../features/client/pages/Workout";
+import ClientMeal from "../features/client/pages/Meal";
+import ClientProfilePage from "../features/client/pages/Profile";
+import ClientSettings from "../features/client/pages/Settings";
+
 import ClientProgress from "../features/progress/pages/Progress";
 
 import useAuth from "../features/auth/hooks/useAuth";
@@ -39,6 +44,8 @@ export default function AppRoutes() {
 
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+
+        {/* Coach */}
 
         <Route
           path="/coach"
@@ -112,6 +119,8 @@ export default function AppRoutes() {
           }
         />
 
+        {/* Client */}
+
         <Route
           path="/client"
           element={
@@ -122,10 +131,46 @@ export default function AppRoutes() {
         />
 
         <Route
+          path="/client/workout"
+          element={
+            <ProtectedRoute>
+              <ClientWorkout />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/client/meal"
+          element={
+            <ProtectedRoute>
+              <ClientMeal />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
           path="/client/progress"
           element={
             <ProtectedRoute>
               <ClientProgress />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/client/profile"
+          element={
+            <ProtectedRoute>
+              <ClientProfilePage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/client/settings"
+          element={
+            <ProtectedRoute>
+              <ClientSettings />
             </ProtectedRoute>
           }
         />

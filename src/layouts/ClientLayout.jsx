@@ -13,21 +13,21 @@ export default function ClientLayout({ children }) {
         <nav className="space-y-4">
 
           <Link
-            to="/client/progress"
+            to="/client"
             className="block hover:text-orange-500"
           >
             Dashboard
           </Link>
 
           <Link
-            to="/client/progress"
+            to="/client/workout"
             className="block hover:text-orange-500"
           >
             Today's Workout
           </Link>
 
           <Link
-            to="/client/progress"
+            to="/client/meal"
             className="block hover:text-orange-500"
           >
             Meal Plan
@@ -41,10 +41,17 @@ export default function ClientLayout({ children }) {
           </Link>
 
           <Link
-            to="/client/progress"
+            to="/client/profile"
             className="block hover:text-orange-500"
           >
             Profile
+          </Link>
+
+          <Link
+            to="/client/settings"
+            className="block hover:text-orange-500"
+          >
+            Settings
           </Link>
 
         </nav>

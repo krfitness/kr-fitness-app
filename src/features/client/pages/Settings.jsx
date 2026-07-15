@@ -1,17 +1,17 @@
-import DashboardLayout from "../../layouts/DashboardLayout";
+import ClientLayout from "../../../layouts/ClientLayout";
 
 export default function Settings() {
   return (
-    <DashboardLayout>
+    <ClientLayout>
       <div className="text-white">
         <h1 className="text-4xl font-bold text-orange-500">
           Settings
         </h1>
 
         <p className="mt-3 text-gray-400">
-          KR Fitness settings will appear here.
+          Settings page coming soon.
         </p>
       </div>
-    </DashboardLayout>
+    </ClientLayout>
   );
 }
